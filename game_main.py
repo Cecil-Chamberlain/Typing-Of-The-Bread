@@ -1,5 +1,5 @@
 import pygame
-from toastman import *
+from sprites import *
 
 pygame.init()
 
@@ -10,7 +10,7 @@ pygame.display.set_caption('Typing Of The Bread')
 
 clock = pygame.time.Clock()
 
-PTM = Toastman(resolution[0]*0.5,resolution[1]*0.5,300,360,10)
+PTM = Toastman(resolution[0]*0.5,resolution[1]*0.5,300,360,10,"ptmsprite.png")
 
 quitgame = False
 while not quitgame:
