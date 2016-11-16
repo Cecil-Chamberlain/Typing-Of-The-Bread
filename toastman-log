@@ -1,0 +1,43 @@
+-------------------------------16 Nov 2016------------------------------
+
+Considering the problem:
+
+Our hero Powdered Toast Man get into a spot of trouble and finds himself running from a Zombie hoard.
+The Zombies exhibit a curious characteristic in that they display a question above their heads.
+It is Powdered Toast Man's job to solve these problems in order for to destroy each Zombie
+
+Classes:
+	Base Classes:
+		Sprites:
+			Powdered Toast Man
+			Zombie
+		Parallax:
+			Scenery
+		Text:
+			Question
+			Answer
+			Menu
+		
+	
+
+Functions:
+	update() # sprite function, for rendering sprite sheet
+	solve() # text function, test answer against dictionary
+	destroy() # zombie function, destroy zombie sprite
+	die() # 
+
+# Dynamically create Zombies as in Thorstens animal guessing game where he dynamically creates nodes of a tree in the form of a class.
+
+Jobs due 23rd Nov 2016:
+
+	Colin: Dictionaries 
+
+	Toby: Flesh out one of the other classes, parallax or text.
+
+		if text:
+			Find a way of rendering a string to the screen based on what characters the user has input. Store each new keystroke in a global variable and delete it when the user presses enter.
+		
+		if parallax:
+			Get a long image scrolling at the back of the screen. Using two images that will scroll and replace each other when the image 'runs out'.
+
+
