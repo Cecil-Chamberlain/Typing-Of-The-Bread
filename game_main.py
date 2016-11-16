@@ -17,6 +17,9 @@ while not quitgame:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             quitgame = True
+"""     if event.type == "something like enter key???"
+            global string
+            string = Null      """ 
 
 
     window.fill((0,0,0))
