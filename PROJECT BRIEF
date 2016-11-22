@@ -1,0 +1,40 @@
+Project
+Project
+
+Develop a simple game in a group of 2-3 people. The game should include a graphical interactive component and it is suggested that you use the pygame api. E.g. you may implement an arcade game like tetris or space invaders.
+
+While it is a good idea to look at code samples please do not use other people's code but write your own! Please be explicit about ideas/structures you have learnt from other people's code.
+
+The following criteria will contribute to your mark:
+
+    Quality of game play (40 %)
+        Is the game fun to play?
+        Does it look and sound good?
+        Is it free from errors?
+        Is it platform independent (i.e does it run on mac, windows and linux) ?
+    Software quality (40 %)
+        Good use of Python (objects, functions etc)
+        Reusable code
+        Is the code well documented?
+    Other factors (20 %)
+        Did the team work well together? 
+        Are the instructions clear?
+        Did the demo go well?
+        Clear references to code used for inspiration 
+
+The submission should include the following (as one zip file)
+
+    Python source code (with comments explaining the structure of the code).
+    Any other files required, e.g. graphics or soundfiles.
+    A short installation instruction in a file README (<= 1 page)
+    A short description of the game in a file called DESCRIPTION (<= 2 pages)
+    A short statement describing the individual contribution to the project CONTRIB (<= 1 page)
+    and how you have used other programs (which ones) for inspiration.
+
+Each member of the group should submit their own copy (which should agree with the other team member's submission apart froom CONTRIB). 
+
+You will be asked to anonymously assess the contributions of the other team members and this will feed into the final mark.
+
+All group members have to show up the the scheduled demo and may be asked to explain part of the code during the demo.
+
+If you have any questions regarding the project, please use the discussion forum!

@@ -1,4 +1,9 @@
 import pygame
+import pygame.freetype
+from questions import *
+from zombies import *
+
+pygame.freetype.init()
 
 class Sprites:
     def __init__(self, x, y, width, height, frames, image):
@@ -21,6 +26,11 @@ class Toastman(Sprites):
     life = 100
 
 class Zombie(Sprites):
+    
+    def __init__(self, x, y, width, height, frames, image, question):
+        Sprites.__init__(self, x, y, width, height, frames, image)
+        self.question = question
+        
     def update(self, window):
         window.blit(self.image,(self.x,self.y),(self.pos*self.width,0,self.width,self.height))
         if (self.pos >= self.frames):
@@ -28,9 +38,13 @@ class Zombie(Sprites):
         else:
             self.pos += 1
             self.x += 2
-        if self.x > 400:
-            self.__del__()
-            
+        font = pygame.font.Font(None, 32)
+        quest = font.render(self.question, 0, (255,255,255))
+        window.blit(quest,(self.x,self.y))
+        
 
-    def __del__(self):
-        del self
+    def check(self, text):
+        global question_set
+        if text == questions_set[0][self.question]:
+            zombies[0] = 0
+            
