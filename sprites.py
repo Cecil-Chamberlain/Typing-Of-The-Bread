@@ -18,8 +18,19 @@ class Sprites:
             self.pos += 1
 
 class Toastman(Sprites):
-    pass
+    life = 100
 
 class Zombie(Sprites):
-    pass
+    def update(self, window):
+        window.blit(self.image,(self.x,self.y),(self.pos*self.width,0,self.width,self.height))
+        if (self.pos >= self.frames):
+            self.pos = 0
+        else:
+            self.pos += 1
+            self.x += 2
+        if self.x > 400:
+            self.__del__()
+            
 
+    def __del__(self):
+        del self
