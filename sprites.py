@@ -1,6 +1,5 @@
 import pygame
 import pygame.freetype
-from questions import *
 from zombies import *
 
 pygame.freetype.init()
@@ -15,7 +14,7 @@ class Sprites:
         self.image = pygame.image.load("assets/{}".format(image))
         self.pos = 0
 
-    def update(self, window):
+    def update(self, window, RES):
         window.blit(self.image,(self.x,self.y),(self.pos*self.width,0,self.width,self.height))
         if (self.pos >= self.frames):
             self.pos = 0
@@ -23,7 +22,19 @@ class Sprites:
             self.pos += 1
 
 class Toastman(Sprites):
-    life = 100
+    def __init__(self, x, y, width, height, frames, image, RES):
+        Sprites.__init__(self, x, y, width, height, frames, image)
+        self.RES = RES
+        self.life = RES[0]*0.9
+
+    def update(self, window, RES):
+        window.blit(self.image,(self.x,self.y),(self.pos*self.width,0,self.width,self.height))
+        if (self.pos >= self.frames):
+            self.pos = 0
+        else:
+            self.pos += 1
+        pygame.draw.rect(window, (255,0,0), (RES[0]*0.05,RES[1]*0.05,self.life,RES[1]*0.05))
+    
 
 class Zombie(Sprites):
     
@@ -31,10 +42,13 @@ class Zombie(Sprites):
         Sprites.__init__(self, x, y, width, height, frames, image)
         self.question = question
         
-    def update(self, window):
+    def update(self, window, PTM, RES):
         window.blit(self.image,(self.x,self.y),(self.pos*self.width,0,self.width,self.height))
         if (self.pos >= self.frames):
             self.pos = 0
+        elif (self.x + self.width) > PTM.x + RES[0]*0.1:
+            self.pos += 1
+            PTM.life -= 1
         else:
             self.pos += 1
             self.x += 2
@@ -43,8 +57,7 @@ class Zombie(Sprites):
         window.blit(quest,(self.x,self.y))
         
 
-    def check(self, text):
-        global question_set
-        if text == questions_set[0][self.question]:
-            zombies[0] = 0
+    def check(self, questions_set, text):
+        if text == questions_set[self.question]:
+            active_zombies.remove(active_zombies[current_zombie])
             

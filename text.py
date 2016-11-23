@@ -1,13 +1,15 @@
 import pygame
 import pygame.freetype
 from sprites import *
-from zombies import *
+
 
 pygame.freetype.init()
 
 ans = ""
 
 keysdown = set()
+
+
 
 class Text:
     pass
@@ -20,13 +22,12 @@ class Answer(Text):
         self.x = x
         self.y = y
 
-    def update(self, event, window, zombies):
+    def update(self, event, questions_set, window, active_zombie):
         global ans
         global keysdown
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
-                if zombies[0] != 0:
-                    zombies[0].check(ans)
+                active_zombie.check(questions_set, ans)
                 ans = ""
             elif event.key == pygame.K_BACKSPACE:
                 ans = ans[0:-1]

@@ -26,7 +26,7 @@ Functions:
 	destroy() # zombie function, destroy zombie sprite
 	die() # 
 
-# Dynamically create Zombies as in Thorstens animal guessing game where he dynamically creates nodes of a tree in the form of a class.
+# Dynamically create Zombies as in Thorstens animal guessing game where he dynamically creates nodes of a tree in the form of a class?
 
 Jobs due 23rd Nov 2016:
 
@@ -39,5 +39,32 @@ Jobs due 23rd Nov 2016:
 		
 		if parallax:
 			Get a long image scrolling at the back of the screen. Using two images that will scroll and replace each other when the image 'runs out'.
+
+---------------------------------------------------------------------------
+
+Meeting 23rd November - Unordered list of jobs up to completion:
+
+1. Scenery (background, foreground)
+2. PTM health bar and logic, zombies stopping when they get to PTM
+3. Zombie die animation
+4. Spawning zombies
+5. Text stacking on zombies so you can read multiple questions
+6. Flashing text cursor.
+7. Pass (falling rocks)
+8. Sound/Music
+9. Lose/Death state - restart? Reinitialize variables.
+
+Ordered list of jobs - in priority order:
+
+1. *DONE* PTM health bar/logic, zombies stopping (collision detection)
+2. *DONE* Zombie Spawning
+3. Lose/Death
+4. Zombie Die
+5. Sound/Music
+6. Pass
+7. Scenery
+8. Text stacking
+9. Flashing text cursor
+
 
 
