@@ -58,12 +58,12 @@ Ordered list of jobs - in priority order:
 
 1. *DONE* PTM health bar/logic, zombies stopping (collision detection)
 2. *DONE* Zombie Spawning
-3. Lose/Death
-4. Zombie Die
-5. Sound/Music
+3. Lose/Death 'you died'
+4. *DONE* Zombie Die
+5. Text stacking/Tabbing through active zombies
 6. Pass
-7. Scenery
-8. Text stacking
+7. Sound/Music
+8. Scenery
 9. Flashing text cursor
 
 

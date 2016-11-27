@@ -1,7 +1,6 @@
 import pygame
 import pygame.freetype
-from sprites import *
-
+from zombies import *
 
 pygame.freetype.init()
 
@@ -22,18 +21,22 @@ class Answer(Text):
         self.x = x
         self.y = y
 
-    def update(self, event, questions_set, window, active_zombie):
-        global ans
-        global keysdown
+    def update(self, event, questions_set, window, current_zombie):
+        global ans, keysdown, active_zombies
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RETURN:
-                active_zombie.check(questions_set, ans)
-                ans = ""
-            elif event.key == pygame.K_BACKSPACE:
-                ans = ans[0:-1]
-            elif event.key not in keysdown:
+            if event.key not in keysdown:
                 keysdown.add(event.key)
-                ans = ans + event.unicode
+                if event.key == pygame.K_RETURN:
+                    active_zombies[current_zombie].check(questions_set, ans)
+                    ans = ""
+                elif event.key == pygame.K_BACKSPACE:
+                    ans = ans[0:-1]
+##                elif event.key == pygame.K_TAB:
+##                    for i in active_zombies:
+##                        
+                else:
+                    keysdown.add(event.key)
+                    ans = ans + event.unicode
         if event.type == pygame.KEYUP:
             keysdown.discard(event.key)
 
