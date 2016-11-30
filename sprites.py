@@ -50,10 +50,11 @@ class Zombie(Sprites):
         self.question = question
         self.image = pygame.transform.scale(self.image,(int(self.width*scale),int(self.height*scale)))
         self.width = (width/self.frames)*scale
-        self.height = height*scale        
+        self.height = height*scale
         self.dying = False
         self.dead = False
         self.number = 0
+        self.fontsize = 40*scale
         
         
     def update(self, window, PTM, RES, dead_zombies):
@@ -69,13 +70,13 @@ class Zombie(Sprites):
                 self.pos += 1
                 self.x += 2
                 window.blit(self.image,(self.x,self.y),(self.pos*self.width,0,self.width,self.height))
-            font = pygame.font.Font(None, 18)
+            font = pygame.font.Font(None, int(self.fontsize))
             quest = font.render(self.question, 0, (255,255,255))
-            window.blit(quest,(self.x + (self.width/2), self.y - (18 * self.number)))
+            window.blit(quest,(self.x + (self.width/2), self.y - (int(self.fontsize) * self.number)))
         else:
             if self.x > (0 - self.width):
                 window.blit(self.image,(self.x,self.y),(self.pos*self.width,0,self.width,self.height))
-                self.x -= 4
+                self.x -= 3.5
                 self.pos = 10
             else:
                 self.dead = True
@@ -90,6 +91,7 @@ class Scenery(Sprites):
         Sprites.__init__(self, x, y, width, height, frames, image, RES)
         self.speed = speed
         self.RES = RES
+        self.image = pygame.transform.scale(self.image,(self.width,self.height))
 
     def update(self, window, RES):
         window.blit(self.image,(self.x,self.y))
@@ -97,3 +99,10 @@ class Scenery(Sprites):
             self.x -= self.speed
         else:
             self.x = self.width
+
+class Stationary(Sprites):
+    def __init__(self, x, y, width, height, frames, image, RES, scale):
+        Sprites.__init__(self, x, y, width, height, frames, image, RES)
+        self.RES = RES
+        self.scale = scale
+        self.image = pygame.transform.scale(self.image,(int(self.width*self.scale),int(self.height*self.scale)))

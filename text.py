@@ -13,9 +13,11 @@ class Text:
     pass
 
 class Answer(Text):
-    def __init__(self, x, y):
+    def __init__(self, x, y, RES):
         self.x = x
         self.y = y
+        self.RES = RES
+        self.fontsize = int(RES[0]/30)
 
     def update(self, event, questions_set, window, zombies, active_zombies):
         global ans, keysdown
@@ -36,6 +38,6 @@ class Answer(Text):
         if event.type == pygame.KEYUP:
             keysdown.discard(event.key)
 
-        font = pygame.font.Font(None, 32)
+        font = pygame.font.Font(None, self.fontsize)
         rend = font.render(ans, 0, (255,255,255))
         window.blit(rend,(self.x,self.y))
