@@ -2,6 +2,7 @@ import pygame
 from sprites import *
 from text import *
 from questions import *
+from death import *
 
 
 pygame.init()
@@ -20,6 +21,8 @@ cave_fg1 = Scenery(0,0,3200,RES[1], 0, "cave_fg.png", RES, 4)
 cave_fg2 = Scenery(3200, 0, 3200, RES[1], 0, "cave_fg.png", RES, 4)
 ground1 = Scenery(0, 0, 1550, RES[1], 0, "ground.png", RES, 3.5)
 ground2 = Scenery(1550, 0, 1550, RES[1], 0, "ground.png", RES, 3.5)
+dead = Death(0, 0, RES[0], RES[1], 1, "ded.png")
+retry = flash(0, 0, RES[0], RES[1], 1, "restart.png")
 
 level = 0
 questions = questions_set[level]
@@ -56,24 +59,33 @@ while not quitgame:
             quitgame = True
         if event.type == pygame.USEREVENT+1:
             zombie_counter = spawn_zombie(zombie_counter)
-    
-    cave_bg1.update(window, RES)
-    cave_bg2.update(window, RES)
-    ground1.update(window, RES)
-    ground2.update(window, RES)
-    PTM.update(window, RES)
-    Typewriter.update(window, RES)
-    for i in active_zombies:
-        i.update(window, PTM, RES, dead_zombies)
-    for i in dead_zombies:
-        if i.dead:
-            active_zombies.remove(i)
-            dead_zombies.remove(i)
-    cave_fg1.update(window, RES)
-    cave_fg2.update(window, RES)
-    pygame.draw.rect(window, (255,0,0), (RES[0]*0.05,RES[1]*0.05,PTM.life,RES[1]*0.05))
-    userinput.update(event, questions_set[level], window, zombies, active_zombies)
-
+    if PTM.life > 0:
+        cave_bg1.update(window, RES)
+        cave_bg2.update(window, RES)
+        ground1.update(window, RES)
+        ground2.update(window, RES)
+        PTM.update(window, RES)
+        Typewriter.update(window, RES)
+        for i in active_zombies:
+            i.update(window, PTM, RES, dead_zombies)
+        for i in dead_zombies:
+            if i.dead:
+                active_zombies.remove(i)
+                dead_zombies.remove(i)
+        cave_fg1.update(window, RES)
+        cave_fg2.update(window, RES)
+        pygame.draw.rect(window, (255,0,0), (RES[0]*0.05,RES[1]*0.05,PTM.life,RES[1]*0.05))
+        userinput.update(event, questions_set[level], window, zombies, active_zombies)
+    else:
+        dead.update(window, RES)
+        retry.update(window, RES)
+        if event.type == pygame.KEYDOWN:
+            zombies = {}
+            for key in range(len(questions)):
+                zombies.update({key:Zombie(RES[0]-RES[0]-300,RES[1]*0.53,3300,360,11,"zombie_sprite.png", RES, 0.5, questions[key])})
+            active_zombies = []
+            zombie_counter = 0
+            PTM.life = RES[0]*0.9
     pygame.display.flip() # flip-book, update the entire surface all at once.
     #pygame.display.update() # update specific areas specified in the argument.
     clock.tick(30)
