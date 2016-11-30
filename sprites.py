@@ -1,19 +1,17 @@
 import pygame
 import pygame.freetype
-from zombies import *
-
-current_zombie = 0
 
 pygame.freetype.init()
 
 class Sprites:
-    def __init__(self, x, y, width, height, frames, image):
+    def __init__(self, x, y, width, height, frames, image, RES):
         self.x = x
         self.y = y
         self.width = width
         self.height = height
         self.frames = frames
         self.image = pygame.image.load("assets/{}".format(image))
+        self.RES = RES
         self.pos = 0
 
     def update(self, window, RES):
@@ -23,70 +21,79 @@ class Sprites:
         else:
             self.pos += 1
 
+
+
 class Toastman(Sprites):
-    def __init__(self, x, y, width, height, frames, image, RES):
-        Sprites.__init__(self, x, y, width, height, frames, image)
-        self.RES = RES
+    def __init__(self, x, y, width, height, frames, image, RES, scale):
+        Sprites.__init__(self, x, y, width, height, frames, image, RES)
         self.life = RES[0]*0.9
+        self.scale = scale
+        self.image = pygame.transform.scale(self.image,(int(self.width*scale),int(self.height*scale)))
+        self.width = (width/self.frames)*scale
+        self.height = height*scale
 
     def update(self, window, RES):
-        window.blit(self.image,(self.x,self.y),(self.pos*self.width,0,self.width,self.height))
-        if (self.pos >= self.frames):
+        if (self.pos >= (self.frames - 1)):
             self.pos = 0
+            window.blit(self.image,(self.x,self.y),(self.pos*self.width,0,self.width,self.height))
         else:
             self.pos += 1
+            window.blit(self.image,(self.x,self.y),(self.pos*self.width,0,self.width,self.height))
         
     
 
 class Zombie(Sprites):
     
-    def __init__(self, x, y, width, height, frames, image, question):
-        Sprites.__init__(self, x, y, width, height, frames, image)
+    def __init__(self, x, y, width, height, frames, image, RES, scale, question):
+        Sprites.__init__(self, x, y, width, height, frames, image, RES)
+        self.scale = scale
         self.question = question
-        self.notdead = True
+        self.image = pygame.transform.scale(self.image,(int(self.width*scale),int(self.height*scale)))
+        self.width = (width/self.frames)*scale
+        self.height = height*scale        
+        self.dying = False
+        self.dead = False
+        self.number = 0
         
-    def update(self, window, PTM, RES):
-        if self.notdead:
-            window.blit(self.image,(self.x,self.y),(self.pos*self.width,0,self.width,self.height))
-            if (self.pos >= self.frames):
+        
+    def update(self, window, PTM, RES, dead_zombies):
+        if not self.dying:
+            if (self.pos >= (self.frames -2)):
                 self.pos = 0
-            elif (self.x + self.width) > PTM.x + RES[0]*0.1:
+                window.blit(self.image,(self.x,self.y),(self.pos*self.width,0,self.width,self.height))
+            elif (self.x + (self.width*0.6)) > PTM.x:
                 self.pos += 1
                 PTM.life -= 1
+                window.blit(self.image,(self.x,self.y),(self.pos*self.width,0,self.width,self.height))
             else:
                 self.pos += 1
                 self.x += 2
-            font = pygame.font.Font(None, 32)
+                window.blit(self.image,(self.x,self.y),(self.pos*self.width,0,self.width,self.height))
+            font = pygame.font.Font(None, 18)
             quest = font.render(self.question, 0, (255,255,255))
-            window.blit(quest,(self.x,self.y))
+            window.blit(quest,(self.x + (self.width/2), self.y - (18 * self.number)))
         else:
             if self.x > (0 - self.width):
                 window.blit(self.image,(self.x,self.y),(self.pos*self.width,0,self.width,self.height))
                 self.x -= 4
                 self.pos = 10
             else:
-                pass
+                self.dead = True
+                dead_zombies.append(self)
 
     def check(self, questions_set, text):
-        global current_zombie
         if text.lower() == questions_set[self.question].lower():
-            self.notdead = False
-
-    def kill(self):
-        if self.x < (0 - self.width):
-            active_zombies.remove(self)
-        
-
+            self.dying = True
 
 class Scenery(Sprites):
-    def __init__(self, x, y, width, height, frames, image, speed, RES):
-        Sprites.__init__(self, x, y, width, height, frames, image)
+    def __init__(self, x, y, width, height, frames, image, RES, speed):
+        Sprites.__init__(self, x, y, width, height, frames, image, RES)
         self.speed = speed
         self.RES = RES
 
-    def update(self, window):
+    def update(self, window, RES):
         window.blit(self.image,(self.x,self.y))
-        if (self.x + self.width) > 0:
+        if (self.x + (self.width - 5)) > 0:
             self.x -= self.speed
         else:
             self.x = self.width

@@ -1,6 +1,5 @@
 import pygame
 import pygame.freetype
-from zombies import *
 
 pygame.freetype.init()
 
@@ -13,27 +12,24 @@ keysdown = set()
 class Text:
     pass
 
-class Question(Text):
-    pass
-
 class Answer(Text):
     def __init__(self, x, y):
         self.x = x
         self.y = y
 
-    def update(self, event, questions_set, window, current_zombie):
-        global ans, keysdown, active_zombies
+    def update(self, event, questions_set, window, zombies, active_zombies):
+        global ans, keysdown
         if event.type == pygame.KEYDOWN:
             if event.key not in keysdown:
                 keysdown.add(event.key)
                 if event.key == pygame.K_RETURN:
-                    active_zombies[current_zombie].check(questions_set, ans)
+                    for i in active_zombies:
+                        i.check(questions_set, ans)
                     ans = ""
                 elif event.key == pygame.K_BACKSPACE:
                     ans = ans[0:-1]
-##                elif event.key == pygame.K_TAB:
-##                    for i in active_zombies:
-##                        
+                elif event.key == pygame.K_TAB:
+                    pass
                 else:
                     keysdown.add(event.key)
                     ans = ans + event.unicode
