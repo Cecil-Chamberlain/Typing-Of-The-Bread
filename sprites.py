@@ -1,7 +1,9 @@
 import pygame
 import pygame.freetype
 
+pygame.mixer.init()
 pygame.freetype.init()
+ding = pygame.mixer.Sound("assets/dinguc.wav")
 
 class Sprites:
     def __init__(self, x, y, width, height, frames, image, RES):
@@ -68,7 +70,7 @@ class Zombie(Sprites):
                 window.blit(self.image,(self.x,self.y),(self.pos*self.width,0,self.width,self.height))
             else:
                 self.pos += 1
-                self.x += 2
+                self.x += 4
                 window.blit(self.image,(self.x,self.y),(self.pos*self.width,0,self.width,self.height))
             font = pygame.font.Font(None, int(self.fontsize))
             quest = font.render(self.question, 0, (255,255,255))
@@ -76,7 +78,7 @@ class Zombie(Sprites):
         else:
             if self.x > (0 - self.width):
                 window.blit(self.image,(self.x,self.y),(self.pos*self.width,0,self.width,self.height))
-                self.x -= 3.5
+                self.x -= 4
                 self.pos = 10
             else:
                 self.dead = True
@@ -84,6 +86,7 @@ class Zombie(Sprites):
 
     def check(self, questions_set, text):
         if text.lower() == questions_set[self.question].lower():
+            ding.play()
             self.dying = True
 
 class Scenery(Sprites):

@@ -4,13 +4,21 @@ from text import *
 from questions import *
 from death import *
 
-
+pygame.mixer.pre_init(44100, 16, 2, 128)
 pygame.init()
+pygame.mixer.init()
 RES = (1080,720)
 window = pygame.display.set_mode(RES)
 pygame.display.set_caption('Typing Of The Bread')
 clock = pygame.time.Clock()
 pygame.time.set_timer(pygame.USEREVENT+1, 5000)
+
+pygame.mixer.music.load("assets/musicuc.wav")
+pygame.mixer.music.play()
+
+
+
+
 
 PTM = Toastman(RES[0]*0.65,RES[1]*0.5,3300,360,11,"ptmsprite.png", RES, (RES[1]/360) * 0.35)
 userinput = Answer(RES[0]*0.8, RES[1]*0.55, RES)
@@ -54,11 +62,13 @@ for key in range(len(questions)):
 
 quitgame = False
 while not quitgame:
+    pressedkeys = []
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             quitgame = True
         if event.type == pygame.USEREVENT+1:
             zombie_counter = spawn_zombie(zombie_counter)
+        pressedkeys.append(event)
     if PTM.life > 0:
         cave_bg1.update(window, RES)
         cave_bg2.update(window, RES)
@@ -74,7 +84,7 @@ while not quitgame:
                 dead_zombies.remove(i)
         cave_fg1.update(window, RES)
         cave_fg2.update(window, RES)
-        userinput.update(event, questions_set[level], window, zombies, active_zombies)
+        userinput.update(pressedkeys, questions_set[level], window, zombies, active_zombies)
     else:
         dead.update(window, RES)
         retry.update(window, RES)
