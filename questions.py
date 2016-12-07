@@ -1,6 +1,6 @@
 questions_set = [
-    {"2 raised to the 8th power?":"256", "9 x 9?":"81", "How many bits are in a byte?":"8", "What is Thorstens favourite programming language?":"Haskell", "Who loves orange soda?":"Kel loves orange soda", "Knock knock?":"Who's there?"},
-    {},
-    {},
-    {},
+    {"1":"1","2":"2","3":"3","4":"4","5":"5","6":"6"},
+    {"a":"a","b":"b","c":"c","d":"d","e":"e","f":"f"},
+    {"!":"!","?":"?","£":"£","*":"*","&":"&","[]":"[]"},
+    {"z":"z","y":"y","x":"x","w":"w","v":"v","u":"u"}
     ]

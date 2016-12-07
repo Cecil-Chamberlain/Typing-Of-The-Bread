@@ -23,10 +23,12 @@ ground1 = Scenery(0, 0, 1550, RES[1], 0, "ground.png", RES, 3.5)
 ground2 = Scenery(1550, 0, 1550, RES[1], 0, "ground.png", RES, 3.5)
 dead = Death(0, 0, RES[0], RES[1], 1, "ded.png")
 retry = flash(0, 0, RES[0], RES[1], 1, "restart.png")
+win = Death(0, 0, RES[0], RES[1], 1, "survived.png")
 
 level = 0
 questions = questions_set[level]
 questions = list(questions.keys())
+
 
 zombies = {}
 active_zombies = []
@@ -51,7 +53,9 @@ def spawn_zombie(zombie_counter):
 for key in range(len(questions)):
     zombies.update({key:Zombie(RES[0]-RES[0]-300,RES[1]*0.53,3300,360,11,"zombie_sprite.png", RES, (RES[1]/360) * 0.35, questions[key])})
 
-
+"""
+*Increment levels and final calc
+"""
 quitgame = False
 while not quitgame:
     for event in pygame.event.get():
@@ -59,6 +63,7 @@ while not quitgame:
             quitgame = True
         if event.type == pygame.USEREVENT+1:
             zombie_counter = spawn_zombie(zombie_counter)
+            
     if PTM.life > 0:
         cave_bg1.update(window, RES)
         cave_bg2.update(window, RES)
@@ -75,6 +80,7 @@ while not quitgame:
         cave_fg1.update(window, RES)
         cave_fg2.update(window, RES)
         userinput.update(event, questions_set[level], window, zombies, active_zombies)
+              
     else:
         dead.update(window, RES)
         retry.update(window, RES)
@@ -85,11 +91,31 @@ while not quitgame:
             active_zombies = []
             zombie_counter = 0
             PTM.life = RES[0]*0.9
+
+    if len(active_zombies) == 0 and len(zombies) == zombie_counter:
+        # check if level is == len(question_set) if it is then final state else win up
+        if level == len(questions_set) - 1:
+            dead.update(window, RES)
+
+        else:
+            win.update(window, RES)
+            if event.type == pygame.KEYDOWN:
+                level += 1 
+                questions = questions_set[level]
+                questions = list(questions.keys())
+                zombies = {}
+                for key in range(len(questions)):
+                    zombies.update({key:Zombie(RES[0]-RES[0]-300,RES[1]*0.53,3300,360,11,"zombie_sprite.png", RES, (RES[1]/360) * 0.35, questions[key])})
+                active_zombies = []
+                zombie_counter = 0
+                PTM.life = RES[0]*0.9
+                
     pygame.draw.rect(window, (255,0,0), (RES[0]*0.05,RES[1]*0.05,PTM.life,RES[1]*0.05))
     pygame.display.flip() # flip-book, update the entire surface all at once.
     #pygame.display.update() # update specific areas specified in the argument.
     clock.tick(30)
     pygame.display.set_caption("fps: " + str(clock.get_fps()))
+
 
 pygame.quit()  # to uninitialise pygame
 quit() # exit from python
