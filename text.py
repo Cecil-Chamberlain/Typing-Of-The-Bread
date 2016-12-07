@@ -3,11 +3,11 @@ import pygame.freetype
 
 pygame.freetype.init()
 
+cursor = "|"
+
 ans = ""
 
 keysdown = set()
-
-
 
 class Text:
     pass
@@ -20,7 +20,7 @@ class Answer(Text):
         self.fontsize = int(RES[0]/30)
 
     def update(self, event, questions_set, window, zombies, active_zombies):
-        global ans, keysdown
+        global ans, cursor, keysdown
         if event.type == pygame.KEYDOWN:
             if event.key not in keysdown:
                 keysdown.add(event.key)
@@ -39,5 +39,5 @@ class Answer(Text):
             keysdown.discard(event.key)
 
         font = pygame.font.Font(None, self.fontsize)
-        rend = font.render(ans, 0, (255,255,255))
+        rend = font.render(ans + cursor, 0, (255,255,255))
         window.blit(rend,(self.x,self.y))
