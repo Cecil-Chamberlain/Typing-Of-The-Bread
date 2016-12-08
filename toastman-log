@@ -66,5 +66,30 @@ Ordered list of jobs - in priority order:
 8. Scenery
 9. Flashing text cursor
 
+--------------------------------------------------------------------------
+
+Meeting 29th November:
+
+Decided to ditch the ability to select a particular zombie due to over complexity.
+
+------------------------------------------------------------------------
+
+Meeting 30 November:
+
+Completed Death screen/restart
+Completed Text stacking
+Completed all scenery
+Added scaling so you can change resolution and sprites resize acordingly.
+
+List of things to complete-
+
+1. Music
+2. Pass
+3. Win state.
+4. Flashing text cursor
+
+------------------------------------------------------------------------
+
+Meeting 1st December:
 
 
